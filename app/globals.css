@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 20% 8%;
+    --foreground: 210 20% 98%;
+    --primary: 35 100% 55%;
+    --primary-foreground: 220 20% 8%;
+    --card: 220 20% 12%;
+    --card-foreground: 210 20% 98%;
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground tracking-tight;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/5 backdrop-blur-md border border-white/10;
+  }
+  .glass-dark {
+    @apply bg-black/40 backdrop-blur-lg border border-white/5;
+  }
+}
