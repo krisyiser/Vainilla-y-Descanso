@@ -11,7 +11,7 @@ export default function Hero() {
       {/* Fondo y superposiciones */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105"
-        style={{ backgroundImage: "url('/hero.png')" }}
+        style={{ backgroundImage: "url('/hero.jpg')" }}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-[#0A0E17]" />
       

@@ -7,25 +7,25 @@ const services = [
     id: 'habitaciones',
     title: 'Habitaciones',
     description: 'Espacios creados para tu máximo confort. Camas premium y vistas espectaculares.',
-    image: '/room.png',
+    image: '/room.jpg',
   },
   {
     id: 'restaurante',
     title: 'Restaurante',
     description: 'Gastronomía de altura con ingredientes de origen, una experiencia para tus sentidos.',
-    image: '/restaurant.png',
+    image: '/restaurant.jpg',
   },
   {
     id: 'alberca',
     title: 'Alberca',
     description: 'Relájate en nuestras aguas cristalinas, el corazón vibrante de nuestro hotel.',
-    image: '/pool.png',
+    image: '/pool.jpg',
   },
   {
     id: 'terraza',
     title: 'Terraza',
     description: 'Atardeceres sublimes acompañados de la brisa y coctelería de autor.',
-    image: '/terrace.png',
+    image: '/terrace.jpg',
   }
 ];
 
