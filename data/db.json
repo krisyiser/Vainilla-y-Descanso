@@ -1,0 +1,11 @@
+{
+  "rooms": [
+    { "id": "101", "name": "Moros y Cristianos", "type": "Premium", "status": "available", "capacity": 6, "price": 2800 },
+    { "id": "102", "name": "El Volador", "type": "Standard", "status": "available", "capacity": 4, "price": 1950 },
+    { "id": "201", "name": "Santiagueros", "type": "Standard", "status": "available", "capacity": 4, "price": 1950 },
+    { "id": "202", "name": "Guagua", "type": "Eco", "status": "available", "capacity": 2, "price": 1400 },
+    { "id": "203", "name": "Negritos", "type": "Eco", "status": "available", "capacity": 2, "price": 1400 }
+  ],
+  "reservations": [],
+  "guests": []
+}

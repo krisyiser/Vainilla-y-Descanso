@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const services = [
   {
@@ -29,8 +30,6 @@ const services = [
   }
 ];
 
-// Componente Services: Muestra las áreas del hotel (Habitaciones, Alberca, Restaurante, Terraza)
-// usando tarjetas con imágenes para atraer e informar al usuario.
 export default function Services() {
   return (
     <section id="servicios" className="py-24 bg-[#0A0E17] relative">
@@ -56,9 +55,10 @@ export default function Services() {
               transition={{ duration: 0.6, delay: idx * 0.1 }}
               className="group relative overflow-hidden rounded-3xl aspect-[4/3] sm:aspect-[16/9]"
             >
-              <img 
+              <Image 
                 src={service.image} 
                 alt={service.title} 
+                fill
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent transition-opacity group-hover:opacity-90"></div>

@@ -4,26 +4,69 @@
 
 @layer base {
   :root {
-    --background: 220 20% 8%;
-    --foreground: 210 20% 98%;
-    --primary: 35 100% 55%;
-    --primary-foreground: 220 20% 8%;
-    --card: 220 20% 12%;
-    --card-foreground: 210 20% 98%;
+    --background: 220 10% 4%; /* #090A0F */
+    --foreground: 0 0% 98%;
+    --primary: 43 40% 60%; /* Refined muted gold/bronze */
+    --primary-foreground: 220 10% 4%;
+    --card: 220 10% 6%;
+    --card-foreground: 0 0% 98%;
+    --accent: 43 40% 60%;
   }
 }
 
 @layer base {
   body {
-    @apply bg-background text-foreground tracking-tight;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    @apply tracking-tight selection:bg-primary/20 selection:text-primary;
+    font-feature-settings: "ss01", "ss02", "cv01", "cv02";
   }
 }
 
 @layer utilities {
-  .glass {
-    @apply bg-white/5 backdrop-blur-md border border-white/10;
+  .glass-premium {
+    @apply bg-[#0C0E14]/60 backdrop-blur-3xl border border-white/[0.03] shadow-2xl;
   }
-  .glass-dark {
-    @apply bg-black/40 backdrop-blur-lg border border-white/5;
+  
+  .glow-primary {
+    @apply shadow-[0_0_60px_-15px_rgba(184,151,105,0.2)];
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-br from-white via-[#EAEAEA] to-[#888888];
+  }
+  
+  .text-gradient-gold {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#D4AF37] via-[#F3E5AB] to-[#B58500];
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 2px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-white/10 hover:bg-primary/40 transition-colors;
   }
 }
+
+/* Elite Animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 8s ease-in-out infinite;
+}
+
+.transition-elite {
+  @apply transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)];
+}
+

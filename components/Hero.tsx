@@ -1,73 +1,94 @@
 "use client";
 
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Phone, ChevronDown } from 'lucide-react';
+import { Calendar, ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 
-// Componente Hero: Sección principal (Header). Muestra la imagen de fondo (Hero) 
-// y el título principal invitando al usuario a reservar.
-export default function Hero() {
+export default function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) {
   return (
-    <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
-      {/* Fondo y superposiciones */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105"
-        style={{ backgroundImage: "url('/hero.jpg')" }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-[#0A0E17]" />
+    <section className="relative h-[100dvh] w-full flex items-center justify-center overflow-hidden bg-[hsl(var(--background))]">
+      {/* Ultra-Premium Background Layer */}
+      <div className="absolute inset-0 z-0">
+        <Image 
+          src="/hero.jpg" 
+          alt="Vainilla y Descanso Hero" 
+          fill 
+          priority
+          className="object-cover opacity-50 scale-105 transition-elite"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#090A0F]/95 via-[#090A0F]/60 to-[#090A0F]" />
+        
+        {/* Subtle, elegant light washes instead of harsh neon pulses */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[40%] bg-primary/5 rounded-[100%] blur-[120px]" />
+      </div>
       
-      <div className="relative z-10 text-center px-4 max-w-4xl flex flex-col items-center">
-        <motion.span 
-          initial={{ opacity: 0, y: 20 }}
+      <div className="relative z-10 text-center px-6 max-w-5xl flex flex-col items-center">
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-primary font-medium tracking-[0.2em] uppercase text-sm mb-4 block"
+          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-10 flex flex-col items-center gap-4"
         >
-          Boutique Hotel Premium
-        </motion.span>
+          <div className="w-px h-16 bg-gradient-to-b from-transparent via-primary/50 to-transparent" />
+          <span className="text-primary/80 font-medium tracking-[0.4em] uppercase text-[9px] md:text-[11px]">
+            The Art of Pure Hospitality
+          </span>
+        </motion.div>
         
         <motion.h1 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="font-heading text-5xl md:text-7xl font-bold text-white mb-6 leading-tight drop-shadow-2xl"
+          transition={{ duration: 1.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="font-heading text-5xl md:text-8xl lg:text-9xl font-light text-white mb-8 leading-[1.1] tracking-[-0.04em]"
         >
-          Tu Refugio de <br/>
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-primary">
-            Paz y Elegancia
+          Experiencia <br/>
+          <span className="text-gradient-gold font-medium italic pr-4">
+            Atemporal
           </span>
         </motion.h1>
 
         <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 2, delay: 0.5 }}
+          className="text-gray-400/90 text-base md:text-xl max-w-2xl mx-auto mb-16 font-light leading-relaxed tracking-wide"
         >
-          Un escape de lujo diseñado para ofrecerte el descanso absoluto. Descubre Vainilla y Descanso, un lugar donde cada detalle importa.
+          Descubra un santuario de elegancia discreta y confort absoluto en el corazón de la cultura Totonaca.
         </motion.p>
         
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+          transition={{ duration: 1.5, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col sm:flex-row gap-6 justify-center items-center w-full sm:w-auto px-4"
         >
-          <a href="tel:+521234567890" className="flex items-center gap-2 bg-white text-black px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform">
-            <Phone className="w-5 h-5"/> Reservar Ahora
-          </a>
-          <a href="https://airbnb.com" target="_blank" rel="noreferrer" className="flex items-center gap-2 glass text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white/10 transition-colors">
-            Ver en Airbnb
-          </a>
+          <button 
+            onClick={onOpenBooking}
+            className="group relative flex items-center justify-center gap-3 bg-white text-black px-12 py-5 rounded-full font-medium text-sm tracking-widest uppercase overflow-hidden transition-elite hover:bg-[#EAEAEA]"
+          >
+            Reservar Suite
+          </button>
+          
+          <button 
+            className="group flex items-center justify-center gap-3 text-white/80 px-8 py-5 rounded-full font-medium text-sm tracking-widest uppercase hover:text-white transition-elite"
+          >
+            Explorar Galería 
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-elite opacity-50 group-hover:opacity-100" />
+          </button>
         </motion.div>
       </div>
 
       <motion.div 
-        animate={{ y: [0, 10, 0] }}
-        transition={{ repeat: Infinity, duration: 2 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-gray-400"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.4 }}
+        transition={{ duration: 2, delay: 1.5 }}
+        className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
       >
-        <ChevronDown className="w-8 h-8 opacity-50" />
+        <span className="text-[8px] uppercase tracking-[0.3em] text-white/50">Descubrir</span>
+        <div className="w-px h-12 bg-gradient-to-b from-white/30 to-transparent" />
       </motion.div>
     </section>
   );
 }
+
