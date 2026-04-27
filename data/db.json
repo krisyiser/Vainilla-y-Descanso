@@ -12,7 +12,7 @@
       "id": "102",
       "name": "El Volador",
       "type": "Standard",
-      "status": "occupied",
+      "status": "available",
       "capacity": 4,
       "price": 1950
     },
