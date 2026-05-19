@@ -125,6 +125,23 @@
       "status": "confirmed_online",
       "sync_status": "synced_to_desktop",
       "created_at": "2026-05-19T05:50:23.229Z"
+    },
+    {
+      "id": "0ovozofxg",
+      "reservation_id": "res_queue_1779177521189",
+      "room_id": "101",
+      "guest_name": "Kristian Yiser Kuri Vargas",
+      "guest_email": "hellokristian7u7@gmail.com",
+      "guest_phone": "7848489790",
+      "guest_origin": "CDMX ",
+      "guests_count": 3,
+      "check_in": "2026-05-21",
+      "check_out": "2026-05-24",
+      "total_price": 7400,
+      "notes": "[Huéspedes: 3 | Tel: 7848489790 | Procedencia: CDMX ] Doble desayuno ",
+      "status": "pending_sync",
+      "sync_status": "queued_in_github",
+      "created_at": "2026-05-19T07:58:41.189Z"
     }
   ],
   "guests": [
@@ -133,6 +150,14 @@
       "name": "yersi",
       "email": "yersistardust@gmail.com",
       "created_at": "2026-05-19T04:06:38.393Z"
+    },
+    {
+      "id": "btts71e9l",
+      "name": "Kristian Yiser Kuri Vargas",
+      "email": "hellokristian7u7@gmail.com",
+      "phone": "7848489790",
+      "origin": "CDMX ",
+      "created_at": "2026-05-19T07:58:41.149Z"
     }
   ],
   "webhook_url": "https://attacks-minus-same-info.trycloudflare.com/api/v1/reservations"
