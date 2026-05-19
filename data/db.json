@@ -51,6 +51,20 @@
       "dates": "16 de mayo",
       "notes": "solicita doble desayuno",
       "paymentStatus": "paid"
+    },
+    {
+      "id": "5qm5gq8vm",
+      "reservation_id": "res_queue_1779156581936",
+      "room_id": "202",
+      "guest_name": "juan perez",
+      "guest_email": "yersistardust@gmail.com",
+      "check_in": "2026-05-19",
+      "check_out": "2026-05-20",
+      "total_price": 1400,
+      "notes": "",
+      "status": "pending_sync",
+      "sync_status": "queued_in_github",
+      "created_at": "2026-05-19T02:09:41.936Z"
     }
   ],
   "guests": [
