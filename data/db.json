@@ -3509,6 +3509,20 @@
       "status": "pending_sync",
       "sync_status": "queued_in_github",
       "created_at": "2026-05-19T03:57:58.830Z"
+    },
+    {
+      "id": "ejhhwcnsl",
+      "reservation_id": "res_queue_1779163079836",
+      "room_id": "101",
+      "guest_name": "juan",
+      "guest_email": "",
+      "check_in": "undefined",
+      "check_out": "undefined",
+      "total_price": 1800,
+      "notes": "Reserva desde sitio web en lÃÂ­nea",
+      "status": "pending_sync",
+      "sync_status": "queued_in_github",
+      "created_at": "2026-05-19T03:57:59.836Z"
     }
   ],
   "guests": [
