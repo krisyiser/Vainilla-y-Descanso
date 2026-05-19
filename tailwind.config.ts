@@ -15,13 +15,16 @@ const config: Config = {
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        charcoal: "#2D2D2D",
+        bone: "#F9F7F2",
+        clay: "#E8E4D9",
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: "#A68A64",
+          foreground: "#F9F7F2",
         },
         card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+          DEFAULT: "#F9F7F2",
+          foreground: "#2D2D2D",
         },
       },
     },

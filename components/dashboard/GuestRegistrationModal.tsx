@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, User, Bed, Calendar, ArrowRight, Loader2 } from 'lucide-react';
+import { X, User, Bed, Calendar, ArrowRight, Loader2, CheckCircle2 } from 'lucide-react';
 
 interface Props {
   isOpen: boolean;
@@ -52,9 +52,8 @@ export default function GuestRegistrationModal({ isOpen, onClose }: Props) {
         body: JSON.stringify({ id: formData.roomId, status: 'occupied' })
       });
 
-      alert('Registro completado con éxito');
       onClose();
-      window.location.reload(); // Refresh to show new data
+      window.location.reload(); 
     } catch (error) {
       console.error(error);
       alert('Error al procesar el registro');
@@ -65,114 +64,119 @@ export default function GuestRegistrationModal({ isOpen, onClose }: Props) {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[100] flex items-center justify-center sm:p-6 lg:p-12">
+      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 lg:p-12">
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="absolute inset-0 bg-[#090A0F]/80 backdrop-blur-md"
+          className="absolute inset-0 bg-[#2D2D2D]/40 backdrop-blur-sm"
         />
         
         <motion.div 
-          initial={{ opacity: 0, scale: 0.98, y: 10 }}
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.98, y: 10 }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full h-full sm:h-auto sm:max-w-3xl bg-[#0C0E14] border border-white/5 sm:rounded-3xl overflow-hidden shadow-2xl flex flex-col"
+          exit={{ opacity: 0, scale: 0.95, y: 20 }}
+          className="relative w-full max-w-2xl bg-white rounded-[32px] overflow-hidden shadow-2xl flex flex-col"
         >
           {/* Header */}
-          <div className="flex justify-between items-center p-8 border-b border-white/5">
+          <div className="bg-[#F9F7F2] p-10 border-b border-[#E8E4D9] flex justify-between items-center">
             <div>
-              <h2 className="text-2xl font-light text-white tracking-tight">Registro de Huésped</h2>
-              <p className="text-[10px] uppercase tracking-[0.2em] text-gray-500 mt-1">Asignación de Suite</p>
+              <h2 className="text-2xl font-heading font-medium text-[#2D2D2D]">Nuevo Registro</h2>
+              <p className="text-xs text-[#8C8C8C] mt-1 uppercase tracking-widest font-bold">Check-in Lobby</p>
             </div>
-            <button onClick={onClose} className="p-2 text-gray-500 hover:text-white transition-colors">
-              <X size={20} strokeWidth={1.5} />
+            <button onClick={onClose} className="w-10 h-10 rounded-full bg-white border border-[#E8E4D9] flex items-center justify-center text-[#8C8C8C] hover:text-red-500 transition-colors">
+              <X size={20} />
             </button>
           </div>
 
           {/* Form Area */}
-          <div className="flex-grow p-8 overflow-y-auto custom-scrollbar">
-            <form onSubmit={handleSubmit} className="space-y-12">
-              <div className="space-y-6">
-                <div className="flex items-center gap-3">
-                  <User className="text-primary/70" size={16} strokeWidth={1.5} />
-                  <h3 className="text-[11px] font-medium uppercase tracking-[0.2em] text-white">Información Personal</h3>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="p-10 overflow-y-auto max-h-[70vh] custom-scrollbar-light">
+            <form onSubmit={handleSubmit} className="space-y-10">
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="space-y-6">
+                  <div className="flex items-center gap-2 text-[#A68A64]">
+                    <User size={16} />
+                    <span className="text-[10px] font-bold uppercase tracking-widest">Información del Huésped</span>
+                  </div>
+                  
                   <div className="space-y-2">
-                    <label className="text-[9px] font-medium text-gray-500 uppercase tracking-widest">Nombre Completo</label>
+                    <label className="text-[11px] font-bold text-[#4A4A4A] ml-1">Nombre Completo</label>
                     <input 
                       required
                       type="text" 
+                      placeholder="Ej. Juan Pérez"
                       value={formData.name}
                       onChange={(e) => setFormData({...formData, name: e.target.value})}
-                      className="w-full bg-transparent border-b border-white/10 py-3 text-white focus:outline-none focus:border-primary/50 transition-colors font-light text-sm" 
+                      className="w-full bg-[#F9F7F2] border border-[#E8E4D9] rounded-2xl py-4 px-5 text-sm focus:outline-none focus:ring-2 focus:ring-[#A68A64]/20 transition-all" 
                     />
                   </div>
+
                   <div className="space-y-2">
-                    <label className="text-[9px] font-medium text-gray-500 uppercase tracking-widest">Correo Electrónico</label>
+                    <label className="text-[11px] font-bold text-[#4A4A4A] ml-1">Correo Electrónico</label>
                     <input 
                       required
                       type="email" 
+                      placeholder="ejemplo@correo.com"
                       value={formData.email}
                       onChange={(e) => setFormData({...formData, email: e.target.value})}
-                      className="w-full bg-transparent border-b border-white/10 py-3 text-white focus:outline-none focus:border-primary/50 transition-colors font-light text-sm" 
+                      className="w-full bg-[#F9F7F2] border border-[#E8E4D9] rounded-2xl py-4 px-5 text-sm focus:outline-none focus:ring-2 focus:ring-[#A68A64]/20 transition-all" 
                     />
                   </div>
                 </div>
-              </div>
 
-              <div className="space-y-6">
-                <div className="flex items-center gap-3">
-                  <Bed className="text-primary/70" size={16} strokeWidth={1.5} />
-                  <h3 className="text-[11px] font-medium uppercase tracking-[0.2em] text-white">Estancia</h3>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="space-y-6">
+                  <div className="flex items-center gap-2 text-[#A68A64]">
+                    <Bed size={16} />
+                    <span className="text-[10px] font-bold uppercase tracking-widest">Detalles de Estancia</span>
+                  </div>
+
                   <div className="space-y-2">
-                    <label className="text-[9px] font-medium text-gray-500 uppercase tracking-widest">Fechas (Check-in / Check-out)</label>
+                    <label className="text-[11px] font-bold text-[#4A4A4A] ml-1">Fechas de Estancia</label>
                     <input 
                       required
                       type="text" 
-                      placeholder="Ej: 26-30 Abril"
+                      placeholder="26 Abr - 30 Abr"
                       value={formData.dates}
                       onChange={(e) => setFormData({...formData, dates: e.target.value})}
-                      className="w-full bg-transparent border-b border-white/10 py-3 text-white focus:outline-none focus:border-primary/50 transition-colors font-light text-sm" 
+                      className="w-full bg-[#F9F7F2] border border-[#E8E4D9] rounded-2xl py-4 px-5 text-sm focus:outline-none focus:ring-2 focus:ring-[#A68A64]/20 transition-all" 
                     />
                   </div>
+
                   <div className="space-y-2">
-                    <label className="text-[9px] font-medium text-gray-500 uppercase tracking-widest">Suite Asignada</label>
+                    <label className="text-[11px] font-bold text-[#4A4A4A] ml-1">Seleccionar Suite</label>
                     <select 
                       value={formData.roomId}
                       onChange={(e) => setFormData({...formData, roomId: e.target.value})}
-                      className="w-full bg-transparent border-b border-white/10 py-3 text-white focus:outline-none focus:border-primary/50 transition-colors font-light text-sm appearance-none"
+                      className="w-full bg-[#F9F7F2] border border-[#E8E4D9] rounded-2xl py-4 px-5 text-sm focus:outline-none focus:ring-2 focus:ring-[#A68A64]/20 transition-all appearance-none cursor-pointer"
                     >
-                      <option value="101" className="bg-[#0C0E14]">101 - Moros y Cristianos</option>
-                      <option value="102" className="bg-[#0C0E14]">102 - El Volador</option>
-                      <option value="201" className="bg-[#0C0E14]">201 - Santiagueros</option>
-                      <option value="202" className="bg-[#0C0E14]">202 - Guagua</option>
-                      <option value="203" className="bg-[#0C0E14]">203 - Negritos</option>
+                      <option value="101">101 - Moros y Cristianos</option>
+                      <option value="102">102 - El Volador</option>
+                      <option value="201">201 - Santiagueros</option>
+                      <option value="202">202 - Guagua</option>
+                      <option value="203">203 - Negritos</option>
                     </select>
                   </div>
                 </div>
               </div>
 
-              <div className="pt-8 flex flex-col sm:flex-row gap-4 justify-end">
+              <div className="pt-6 border-t border-[#F2EEE4] flex flex-col md:flex-row gap-4 justify-end">
                 <button 
                   type="button" 
                   onClick={onClose}
                   disabled={loading}
-                  className="px-8 py-3 text-xs tracking-widest uppercase text-gray-500 hover:text-white transition-colors disabled:opacity-50"
+                  className="px-10 py-4 text-xs font-bold uppercase tracking-widest text-[#8C8C8C] hover:text-[#2D2D2D] transition-colors"
                 >
                   Cancelar
                 </button>
                 <button 
                   type="submit"
                   disabled={loading}
-                  className="px-8 py-3 bg-white text-black rounded-full text-xs font-medium tracking-widest uppercase hover:bg-gray-200 transition-colors flex items-center gap-3 disabled:opacity-50"
+                  className="px-10 py-4 bg-[#A68A64] text-white rounded-2xl text-xs font-bold tracking-widest uppercase hover:bg-[#8E7554] transition-all flex items-center justify-center gap-3 shadow-lg shadow-[#A68A64]/20 active:scale-95 disabled:opacity-50"
                 >
-                  {loading ? <Loader2 className="animate-spin" size={14} /> : 'Confirmar'} <ArrowRight size={14} />
+                  {loading ? <Loader2 className="animate-spin" size={16} /> : <CheckCircle2 size={16} />} 
+                  Confirmar Registro
                 </button>
               </div>
             </form>
@@ -182,3 +186,4 @@ export default function GuestRegistrationModal({ isOpen, onClose }: Props) {
     </AnimatePresence>
   );
 }
+

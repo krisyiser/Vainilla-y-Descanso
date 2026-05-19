@@ -1,32 +1,25 @@
 import { NextResponse } from 'next/server';
-import { getDB, updateDB } from '@/lib/github-db';
+import { getDB } from '@/lib/github-db';
+import { processReservation } from '@/lib/hotelApi';
 
 export async function GET() {
   const db = await getDB();
   if (!db) return NextResponse.json({ error: 'DB not found' }, { status: 404 });
-  return NextResponse.json(db.content.reservations);
+  return NextResponse.json(db.content.reservations || []);
 }
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const db = await getDB();
     
-    if (!db) return NextResponse.json({ error: 'DB not found' }, { status: 404 });
+    const result = await processReservation(body);
 
-    const newReservation = {
-      id: Math.random().toString(36).substr(2, 9),
-      created_at: new Date().toISOString(),
-      ...body
-    };
+    if (!result.success) {
+      return NextResponse.json({ error: result.message }, { status: 500 });
+    }
 
-    db.content.reservations.push(newReservation);
-    
-    const success = await updateDB(db.content, db.sha);
-    if (!success) throw new Error('Failed to update GitHub');
-
-    return NextResponse.json(newReservation, { status: 201 });
+    return NextResponse.json(result, { status: result.syncStatus === 'synced_to_tunnel' ? 201 : 202 });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: error.message || 'Error interno del servidor' }, { status: 500 });
   }
 }

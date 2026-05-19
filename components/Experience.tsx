@@ -1,152 +1,125 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Coffee, Utensils, Car, Briefcase, ChevronRight, Clock, Star } from 'lucide-react';
+import { Waves, Coffee, TreePine, Clock, Ticket } from 'lucide-react';
+import Image from 'next/image';
 
-interface ExperienceItem {
-  title: string;
-  time: string;
-  price?: string;
-  icon: React.ReactNode;
-  details?: string[];
-  subsections?: { label: string; text: string }[];
-  items?: { label: string; text: string }[];
-  bg: string;
-  accent: string;
-}
-
-const experiencesData: ExperienceItem[] = [
+const areas = [
   {
-    title: "Desayuno Gourmet",
-    time: "8:00 AM - 12:00 PM",
-    price: "$189 p/p",
-    icon: <Utensils />,
+    id: 'alberca',
+    title: 'Alberca con Chapoteadero',
+    icon: <Waves size={24} />,
+    desc: 'Un oasis de agua cristalina ideal para toda la familia. Contamos con acceso Day Pass para visitantes externos.',
     details: [
-      "Café y Pan artesanal",
-      "Jugo natural y Fruta del día",
-      "Platillo: Chilaquiles, huevo, frijoles"
+      'Day Pass: $100 MXN por persona',
+      'Incluye toalla limpia de cortesía',
+      'Uso completo de baños, regaderas, terrazas, restaurante y café-bar.'
     ],
-    bg: "bg-orange-500/5",
-    accent: "text-orange-500"
+    image: '/pool.jpg'
   },
   {
-    title: "Área Climatizada",
-    time: "8:00 AM - 11:00 PM",
-    icon: <Briefcase />,
-    subsections: [
-      { label: "Mañana", text: "Área de Desayunos" },
-      { label: "Tarde", text: "Juntas y Conferencias" },
-      { label: "Noche", text: "Exclusivo Cafe-Bar" }
+    id: 'cafe-bar',
+    title: 'Salón Climatizado & Café-Bar',
+    icon: <Coffee size={24} />,
+    desc: 'Espacio multifuncional climatizado con capacidad para 30 personas adaptándose a tus necesidades del día:',
+    details: [
+      '8:00 AM a 12:00 PM: Servicio de Desayunos ($189 p/p).',
+      '12:00 PM a 6:00 PM: Renta para juntas de trabajo, conferencias y eventos privados.',
+      '6:00 PM a 11:00 PM: Café-Bar con ambiente selecto y relajado.'
     ],
-    bg: "bg-blue-500/5",
-    accent: "text-blue-400"
+    image: '/restaurant.jpg'
   },
   {
-    title: "Servicios Extra",
-    time: "Disponibles 24/7",
-    icon: <Star />,
-    items: [
-      { label: "Parking", text: "$50 día / $15 h" },
-      { label: "Day Pass", text: "$100 Full Access" }
+    id: 'terrazas',
+    title: 'Terrazas & Áreas Comunes',
+    icon: <TreePine size={24} />,
+    desc: 'Espacios al aire libre, diseñados para la relajación y contemplación en Papantla.',
+    details: [
+      'Ubicación privilegiada con excelente vista.',
+      'Mobiliario exterior confortable.',
+      'Ambiente tranquilo y fresco las 24 horas del día.'
     ],
-    bg: "bg-primary/5",
-    accent: "text-primary"
+    image: '/terrace.jpg'
   }
 ];
 
 export default function Experience() {
+  const [activeArea, setActiveArea] = useState('alberca');
+  const activeData = areas.find(a => a.id === activeArea) || areas[0];
+
   return (
-    <section id="experiencia" className="py-24 bg-[#0A0E17] relative overflow-hidden">
-      {/* Decorative circles for mobile texture */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-      
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-        <div className="mb-12">
-          <motion.span 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            className="text-primary font-bold tracking-widest uppercase text-xs mb-3 block"
+    <section id="experiencias" className="py-32 bg-white overflow-hidden">
+      <div className="container mx-auto px-6">
+
+        <div className="max-w-3xl mb-16 text-left">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="flex items-center gap-3 text-primary font-bold uppercase tracking-[0.3em] text-[10px] mb-4"
           >
-            Servicios Exclusivos
-          </motion.span>
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="font-heading text-4xl md:text-5xl font-bold text-white mb-4"
-          >
-            Experiencia <br className="md:hidden" /> Completa
-          </motion.h2>
+            <div className="w-8 h-px bg-primary" /> Instalaciones del Hotel
+          </motion.div>
+          <h2 className="text-4xl md:text-5xl font-heading font-light text-charcoal leading-tight">
+            Alberca, Café-Bar & <br />
+            <span className="italic font-medium text-primary">Nuestras Terrazas</span>
+          </h2>
+          <p className="text-charcoal/50 font-light leading-relaxed mt-4">
+            Disfruta de nuestros espacios diseñados para complementar tu estancia con comodidad, recreación y productividad.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {experiencesData.map((exp, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              className={`p-6 rounded-[2rem] border border-white/5 ${exp.bg} flex flex-col relative group overflow-hidden`}
+        {/* Tab Controls */}
+        <div className="flex flex-wrap gap-4 mb-12 border-b border-clay/20 pb-4 justify-start">
+          {areas.map((area) => (
+            <button
+              key={area.id}
+              onClick={() => setActiveArea(area.id)}
+              className={`flex items-center gap-2.5 px-6 py-4.5 text-xs font-bold uppercase tracking-wider rounded-2xl transition-all ${activeArea === area.id
+                  ? 'bg-charcoal text-white shadow-lg'
+                  : 'bg-bone text-charcoal hover:bg-clay/20'
+                }`}
             >
-              <div className="flex items-center gap-4 mb-6">
-                <div className={`w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center ${exp.accent}`}>
-                  {React.cloneElement(exp.icon as React.ReactElement, { size: 24 })}
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white">{exp.title}</h3>
-                  <div className="flex items-center gap-1 text-[10px] font-bold text-gray-500 uppercase tracking-widest">
-                    <Clock size={10} /> {exp.time}
-                  </div>
-                </div>
-              </div>
-
-              {exp.details && (
-                <div className="space-y-3 mb-6 flex-grow">
-                  {exp.details.map((item, i) => (
-                    <div key={i} className="flex items-center gap-2 text-sm text-gray-400">
-                      <div className={`w-1 h-1 rounded-full ${exp.accent.replace('text', 'bg')}`}></div>
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {exp.subsections && (
-                <div className="grid grid-cols-3 gap-2 mb-6 flex-grow">
-                  {exp.subsections.map((sub, i) => (
-                    <div key={i} className="text-center p-2 rounded-xl bg-white/5 border border-white/5">
-                      <span className={`text-[9px] font-bold block mb-1 uppercase tracking-tighter ${exp.accent}`}>{sub.label}</span>
-                      <p className="text-[10px] text-gray-400 leading-tight">{sub.text.split(' ')[0]}</p>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {exp.items && (
-                <div className="space-y-2 mb-6 flex-grow">
-                  {exp.items.map((item, i) => (
-                    <div key={i} className="flex justify-between items-center bg-white/5 p-3 rounded-xl border border-white/5">
-                      <span className="text-xs text-gray-400 font-medium">{item.label}</span>
-                      <span className="text-xs text-white font-bold">{item.text}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/5">
-                {exp.price ? (
-                  <span className="text-lg font-black text-white">{exp.price}</span>
-                ) : (
-                  <span className="text-xs font-bold text-gray-500 italic">Consultar disponibilidad</span>
-                )}
-                <button className={`w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform ${exp.accent}`}>
-                  <ChevronRight size={20} />
-                </button>
-              </div>
-            </motion.div>
+              {area.icon}
+              <span>{area.title}</span>
+            </button>
           ))}
         </div>
+
+        {/* Tab Content Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+          {/* Text Info */}
+          <div className="lg:col-span-5 space-y-8 text-left">
+            <div className="space-y-4">
+              <h3 className="text-3xl font-heading font-medium text-charcoal">{activeData.title}</h3>
+              <p className="text-sm text-charcoal/60 leading-relaxed font-light">{activeData.desc}</p>
+            </div>
+
+            <div className="space-y-3 bg-[#F9F7F2] p-6 rounded-2xl border border-[#E8E4D9]">
+              <h5 className="text-[10px] font-bold uppercase tracking-widest text-[#A68A64]">Detalles Importantes</h5>
+              <ul className="space-y-2">
+                {activeData.details.map((detail, idx) => (
+                  <li key={idx} className="text-xs text-charcoal/70 leading-relaxed font-medium flex gap-2 items-start">
+                    <span className="text-primary shrink-0 mt-0.5">•</span>
+                    <span>{detail}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Graphic/Image display */}
+          <div className="lg:col-span-7 relative h-[450px] w-full rounded-[40px] overflow-hidden shadow-2xl">
+            <Image
+              src={activeData.image}
+              alt={activeData.title}
+              fill
+              className="object-cover"
+            />
+          </div>
+        </div>
+
       </div>
     </section>
   );
