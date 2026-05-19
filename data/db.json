@@ -83,6 +83,20 @@
       "status": "confirmed_online",
       "sync_status": "synced_to_desktop",
       "created_at": "2026-05-19T04:35:38.217Z"
+    },
+    {
+      "id": "9ssio6lf0",
+      "reservation_id": "res_queue_1779166123688",
+      "room_id": "101",
+      "guest_name": "yersi",
+      "guest_email": "yersistardust@gmail.com",
+      "check_in": "2026-05-20",
+      "check_out": "2026-05-24",
+      "total_price": 7200,
+      "notes": "",
+      "status": "pending_sync",
+      "sync_status": "queued_in_github",
+      "created_at": "2026-05-19T04:48:43.688Z"
     }
   ],
   "guests": [
