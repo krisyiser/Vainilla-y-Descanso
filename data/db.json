@@ -139,8 +139,8 @@
       "check_out": "2026-05-24",
       "total_price": 7400,
       "notes": "[Huéspedes: 3 | Tel: 7848489790 | Procedencia: CDMX ] Doble desayuno ",
-      "status": "pending_sync",
-      "sync_status": "queued_in_github",
+      "status": "confirmed_online",
+      "sync_status": "synced_to_desktop",
       "created_at": "2026-05-19T07:58:41.189Z"
     }
   ],
