@@ -142,6 +142,23 @@
       "status": "confirmed_online",
       "sync_status": "synced_to_desktop",
       "created_at": "2026-05-19T07:58:41.189Z"
+    },
+    {
+      "id": "y2nhcpmqr",
+      "reservation_id": "res_queue_1779177771874",
+      "room_id": "102",
+      "guest_name": "Abner Emmanuel Garcia Romero ",
+      "guest_email": "guero.302002@gmail.com",
+      "guest_phone": "2217704735",
+      "guest_origin": "Puebla ",
+      "guests_count": 2,
+      "check_in": "2026-05-29",
+      "check_out": "2026-05-30",
+      "total_price": 1600,
+      "notes": "[Huéspedes: 2 | Tel: 2217704735 | Procedencia: Puebla ]",
+      "status": "pending_sync",
+      "sync_status": "queued_in_github",
+      "created_at": "2026-05-19T08:02:51.874Z"
     }
   ],
   "guests": [
@@ -158,6 +175,14 @@
       "phone": "7848489790",
       "origin": "CDMX ",
       "created_at": "2026-05-19T07:58:41.149Z"
+    },
+    {
+      "id": "2wls6wd9t",
+      "name": "Abner Emmanuel Garcia Romero ",
+      "email": "guero.302002@gmail.com",
+      "phone": "2217704735",
+      "origin": "Puebla ",
+      "created_at": "2026-05-19T08:02:51.843Z"
     }
   ],
   "webhook_url": "https://attacks-minus-same-info.trycloudflare.com/api/v1/reservations"
