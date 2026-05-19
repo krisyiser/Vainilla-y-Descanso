@@ -41,7 +41,29 @@
       "price": 1400
     }
   ],
-  "reservations": [],
-  "guests": [],
+  "reservations": [
+    {
+      "id": "zftf7y9ps",
+      "reservation_id": "res_queue_1779163598477",
+      "room_id": "101",
+      "guest_name": "yersi",
+      "guest_email": "yersistardust@gmail.com",
+      "check_in": "2026-05-19",
+      "check_out": "2026-05-20",
+      "total_price": 1800,
+      "notes": "",
+      "status": "pending_sync",
+      "sync_status": "queued_in_github",
+      "created_at": "2026-05-19T04:06:38.477Z"
+    }
+  ],
+  "guests": [
+    {
+      "id": "73doml861",
+      "name": "yersi",
+      "email": "yersistardust@gmail.com",
+      "created_at": "2026-05-19T04:06:38.393Z"
+    }
+  ],
   "webhook_url": "https://compile-youth-reduce-touched.trycloudflare.com/api/v1/reservations"
 }
