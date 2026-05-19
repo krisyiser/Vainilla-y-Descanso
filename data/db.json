@@ -3537,6 +3537,20 @@
       "status": "pending_sync",
       "sync_status": "queued_in_github",
       "created_at": "2026-05-19T03:58:00.747Z"
+    },
+    {
+      "id": "s97vl49av",
+      "reservation_id": "res_queue_1779163081597",
+      "room_id": "202",
+      "guest_name": "juan ",
+      "guest_email": "",
+      "check_in": "undefined",
+      "check_out": "undefined",
+      "total_price": 1400,
+      "notes": "Reserva desde sitio web en lÃÂ­nea",
+      "status": "pending_sync",
+      "sync_status": "queued_in_github",
+      "created_at": "2026-05-19T03:58:01.597Z"
     }
   ],
   "guests": [
