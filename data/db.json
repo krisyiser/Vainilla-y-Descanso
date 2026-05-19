@@ -52,8 +52,8 @@
       "check_out": "2026-05-20",
       "total_price": 1800,
       "notes": "",
-      "status": "pending_sync",
-      "sync_status": "queued_in_github",
+      "status": "confirmed_online",
+      "sync_status": "synced_to_desktop",
       "created_at": "2026-05-19T04:06:38.477Z"
     }
   ],
