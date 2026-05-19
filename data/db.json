@@ -2669,6 +2669,20 @@
       "status": "pending_sync",
       "sync_status": "queued_in_github",
       "created_at": "2026-05-19T03:56:58.930Z"
+    },
+    {
+      "id": "fl2dhtn2r",
+      "reservation_id": "res_queue_1779163019841",
+      "room_id": "101",
+      "guest_name": "juan",
+      "guest_email": "",
+      "check_in": "undefined",
+      "check_out": "undefined",
+      "total_price": 1800,
+      "notes": "Reserva desde sitio web en lÃÂ­nea",
+      "status": "pending_sync",
+      "sync_status": "queued_in_github",
+      "created_at": "2026-05-19T03:56:59.841Z"
     }
   ],
   "guests": [
