@@ -58,15 +58,60 @@ export default function ReservationModal({ isOpen, onClose, selectedSuite }: Pro
   };
 
   const selectedSuiteObj = availableSuites.find(s => s.id === formData.roomId) || availableSuites[0];
-  let nights = 1;
+
+  const calculateDynamicPrice = (roomId: string, checkInStr: string, checkOutStr: string) => {
+    if (!checkInStr || !checkOutStr) return 0;
+    
+    // Parse manual string parts to avoid timezone shifting
+    const [inYear, inMonth, inDay] = checkInStr.split('-').map(Number);
+    const [outYear, outMonth, outDay] = checkOutStr.split('-').map(Number);
+    
+    const start = new Date(inYear, inMonth - 1, inDay);
+    const end = new Date(outYear, outMonth - 1, outDay);
+    
+    if (end <= start) return 0;
+
+    const prices: Record<string, { weekday: number, weekend: number, high: number }> = {
+      '101': { weekday: 1900, weekend: 2300, high: 2800 },
+      '102': { weekday: 1200, weekend: 1600, high: 1950 },
+      '201': { weekday: 1200, weekend: 1600, high: 1950 },
+      '202': { weekday: 900, weekend: 1100, high: 1400 },
+      '203': { weekday: 900, weekend: 1100, high: 1400 },
+    };
+
+    const suitePrices = prices[roomId] || prices['101'];
+    
+    let totalPrice = 0;
+    let current = new Date(start);
+    
+    while (current < end) {
+      const day = current.getDay(); // 0: Domingo, 1: Lunes, ..., 6: Sábado
+      if (day >= 1 && day <= 3) {
+        totalPrice += suitePrices.weekday;
+      } else if (day === 6) {
+        totalPrice += suitePrices.high;
+      } else {
+        totalPrice += suitePrices.weekend; // Jueves, Viernes, Domingo
+      }
+      
+      current.setDate(current.getDate() + 1);
+    }
+    
+    return totalPrice;
+  };
+
+  let nights = 0;
+  let estimatedPrice = 0;
   if (formData.checkIn && formData.checkOut) {
-    const cin = new Date(formData.checkIn).getTime();
-    const cout = new Date(formData.checkOut).getTime();
-    if (cout > cin) {
-      nights = Math.max(1, Math.ceil((cout - cin) / (1000 * 60 * 60 * 24)));
+    const [inYear, inMonth, inDay] = formData.checkIn.split('-').map(Number);
+    const [outYear, outMonth, outDay] = formData.checkOut.split('-').map(Number);
+    const start = new Date(inYear, inMonth - 1, inDay);
+    const end = new Date(outYear, outMonth - 1, outDay);
+    if (end > start) {
+      nights = Math.max(1, Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)));
+      estimatedPrice = calculateDynamicPrice(formData.roomId, formData.checkIn, formData.checkOut);
     }
   }
-  const estimatedPrice = nights * selectedSuiteObj.price;
 
   // Generate valid guest range options
   const guestOptions = [];
@@ -105,7 +150,7 @@ export default function ReservationModal({ isOpen, onClose, selectedSuite }: Pro
         
         // Redirigir a WhatsApp con el mensaje predeterminado y nuevos datos
         const text = encodeURIComponent(
-          `¡Hola Vainilla & Descanso! 🌿\n\nQuiero confirmar mi solicitud de reservación:\n👤 Huésped: ${formData.name}\n📞 Teléfono: ${formData.phone}\n📧 Correo: ${formData.email}\n📍 Procedencia: ${formData.origin || 'No especificada'}\n🏨 Suite: ${selectedSuiteObj.name}\n👥 Huéspedes: ${formData.guestsCount} pers.\n📅 Fechas: ${formData.checkIn} al ${formData.checkOut}\n📝 Notas: ${formData.notes || 'Ninguna'}\n\nQuedo a la espera de la confirmación de la tarifa dinámica para realizar el pago. ¡Gracias!`
+          `¡Hola Vainilla & Descanso! 🌿\n\nQuiero confirmar mi solicitud de reservación:\n👤 Huésped: ${formData.name}\n📞 Teléfono: ${formData.phone}\n📧 Correo: ${formData.email}\n📍 Procedencia: ${formData.origin || 'No especificada'}\n🏨 Suite: ${selectedSuiteObj.name}\n👥 Huéspedes: ${formData.guestsCount} pers.\n📅 Fechas: ${formData.checkIn} al ${formData.checkOut} (${nights} noche(s))\n💰 Subtotal Estimado: $${estimatedPrice.toLocaleString('es-MX')} MXN\n📝 Notas: ${formData.notes || 'Ninguna'}\n\nQuedo a la espera de la confirmación de la tarifa dinámica para realizar el pago. ¡Gracias!`
         );
         const whatsappUrl = `https://wa.me/527821862711?text=${text}`;
         if (typeof window !== 'undefined') {
@@ -343,11 +388,17 @@ export default function ReservationModal({ isOpen, onClose, selectedSuite }: Pro
                     </div>
                   </div>
 
-                  {/* Info Tarifa Dinámica */}
-                  <div className="p-4 bg-clay/10 rounded-2xl border border-clay/30 flex justify-between items-center text-charcoal">
-                    <div className="flex flex-col">
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-primary">Tarifa Dinámica Garantizada</span>
-                      <span className="text-xs text-charcoal/70 font-light mt-0.5">El costo final se aplicará con la tarifa dinámica vigente de temporada al confirmar tu reserva en WhatsApp.</span>
+                  {/* Info Tarifa Dinámica - SUBTOTAL HOSPEDAJE */}
+                  <div className="p-5 bg-clay/10 rounded-[24px] border border-clay/30 flex justify-between items-center text-charcoal">
+                    <div className="flex flex-col text-left">
+                      <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#A68A64]">Tarifa Dinámica Aplicada</span>
+                      <span className="text-xs text-charcoal/70 font-light mt-1">Varios precios por noche</span>
+                    </div>
+                    <div className="flex flex-col text-right">
+                      <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-charcoal/40">Subtotal Hospedaje</span>
+                      <span className="text-2xl font-bold text-charcoal mt-1">
+                        {estimatedPrice > 0 ? `$${estimatedPrice.toLocaleString('es-MX')}` : '$0'}
+                      </span>
                     </div>
                   </div>
 
