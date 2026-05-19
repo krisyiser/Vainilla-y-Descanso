@@ -779,6 +779,20 @@
       "status": "pending_sync",
       "sync_status": "queued_in_github",
       "created_at": "2026-05-19T03:48:33.495Z"
+    },
+    {
+      "id": "bl3kielk2",
+      "reservation_id": "res_queue_1779162514377",
+      "room_id": "103",
+      "guest_name": "juan",
+      "guest_email": "",
+      "check_in": "undefined",
+      "check_out": "undefined",
+      "total_price": 1400,
+      "notes": "Reserva desde sitio web en lÃÂ­nea",
+      "status": "pending_sync",
+      "sync_status": "queued_in_github",
+      "created_at": "2026-05-19T03:48:34.377Z"
     }
   ],
   "guests": [
