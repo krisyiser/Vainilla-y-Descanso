@@ -3411,6 +3411,20 @@
       "status": "pending_sync",
       "sync_status": "queued_in_github",
       "created_at": "2026-05-19T03:57:52.091Z"
+    },
+    {
+      "id": "hqfgo5fis",
+      "reservation_id": "res_queue_1779163073081",
+      "room_id": "103",
+      "guest_name": "juan ",
+      "guest_email": "",
+      "check_in": "undefined",
+      "check_out": "undefined",
+      "total_price": 1400,
+      "notes": "Reserva desde sitio web en lÃÂ­nea",
+      "status": "pending_sync",
+      "sync_status": "queued_in_github",
+      "created_at": "2026-05-19T03:57:53.081Z"
     }
   ],
   "guests": [
