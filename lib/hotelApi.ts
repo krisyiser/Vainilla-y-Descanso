@@ -9,6 +9,9 @@ export interface ReservationPayload {
   check_out: string;
   total_price: number;
   guest_email?: string;
+  guest_phone?: string;
+  guest_origin?: string;
+  guests_count?: number;
   notes?: string;
 }
 
@@ -28,10 +31,16 @@ export async function processReservation(payload: ReservationPayload) {
         id: Math.random().toString(36).substring(2, 11),
         name: payload.guest_name,
         email: payload.guest_email,
+        phone: payload.guest_phone || '',
+        origin: payload.guest_origin || '',
         created_at: new Date().toISOString()
       });
       db.content.guests = guests;
     }
+
+    // Formatear notas agregándoles información del huésped y origen
+    const detailsHeader = `[Huéspedes: ${payload.guests_count || 1} | Tel: ${payload.guest_phone || ''} | Procedencia: ${payload.guest_origin || ''}]`;
+    const formattedNotes = payload.notes ? `${detailsHeader} ${payload.notes}` : detailsHeader;
 
     // 2. INTENTAR ENVIAR EL PAYLOAD AL WEBHOOK SI EXISTE
     if (webhook_url) {
@@ -44,7 +53,12 @@ export async function processReservation(payload: ReservationPayload) {
           guest_name: String(payload.guest_name),
           check_in: String(payload.check_in),
           check_out: String(payload.check_out),
-          total_price: Number(payload.total_price)
+          total_price: Number(payload.total_price),
+          guest_email: payload.guest_email || '',
+          guest_phone: payload.guest_phone || '',
+          guest_origin: payload.guest_origin || '',
+          guests_count: Number(payload.guests_count || 1),
+          notes: formattedNotes
         };
 
         console.log("Enviando reservación al webhook de recepción activa:", webhook_url, webhookPayload);
@@ -71,10 +85,13 @@ export async function processReservation(payload: ReservationPayload) {
             room_id: String(payload.room_id),
             guest_name: String(payload.guest_name),
             guest_email: payload.guest_email || '',
+            guest_phone: payload.guest_phone || '',
+            guest_origin: payload.guest_origin || '',
+            guests_count: Number(payload.guests_count || 1),
             check_in: String(payload.check_in),
             check_out: String(payload.check_out),
             total_price: Number(payload.total_price),
-            notes: payload.notes || '',
+            notes: formattedNotes,
             status: 'confirmed_online',
             sync_status: 'synced_to_tunnel',
             created_at: new Date().toISOString()
@@ -105,10 +122,13 @@ export async function processReservation(payload: ReservationPayload) {
       room_id: String(payload.room_id),
       guest_name: String(payload.guest_name),
       guest_email: payload.guest_email || '',
+      guest_phone: payload.guest_phone || '',
+      guest_origin: payload.guest_origin || '',
+      guests_count: Number(payload.guests_count || 1),
       check_in: String(payload.check_in),
       check_out: String(payload.check_out),
       total_price: Number(payload.total_price),
-      notes: payload.notes || '',
+      notes: formattedNotes,
       status: 'pending_sync',
       sync_status: 'queued_in_github',
       created_at: new Date().toISOString()

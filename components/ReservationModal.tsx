@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Calendar, User, Mail, MessageSquare, Send, CheckCircle2, Loader2, BedDouble, Cloud, MessageCircle } from 'lucide-react';
+import { X, Calendar, User, Mail, MessageSquare, Send, CheckCircle2, Loader2, BedDouble, Cloud, MessageCircle, Phone, MapPin } from 'lucide-react';
 import Image from 'next/image';
 
 interface Props {
@@ -12,11 +12,11 @@ interface Props {
 }
 
 const availableSuites = [
-  { id: '101', name: 'Moros y Cristianos (Master Suite)', price: 1900 },
-  { id: '102', name: 'El Volador (Premium Suite)', price: 1200 },
-  { id: '201', name: 'Santiagueros (Nature Suite)', price: 1200 },
-  { id: '202', name: 'Guaguas (Eco Suite)', price: 900 },
-  { id: '203', name: 'Negritos (Eco Suite)', price: 900 },
+  { id: '101', name: 'Moros y Cristianos (PB)', price: 1900, minCapacity: 3, maxCapacity: 6 },
+  { id: '102', name: 'El Volador (PB)', price: 1200, minCapacity: 2, maxCapacity: 4 },
+  { id: '201', name: 'Santiagueros (PA)', price: 1200, minCapacity: 2, maxCapacity: 4 },
+  { id: '202', name: 'Guaguas (PA)', price: 900, minCapacity: 1, maxCapacity: 2 },
+  { id: '203', name: 'Negritos (PA)', price: 900, minCapacity: 1, maxCapacity: 2 },
 ];
 
 export default function ReservationModal({ isOpen, onClose, selectedSuite }: Props) {
@@ -27,6 +27,9 @@ export default function ReservationModal({ isOpen, onClose, selectedSuite }: Pro
     roomId: '101',
     name: '',
     email: '',
+    phone: '',
+    origin: '',
+    guestsCount: 3,
     checkIn: '',
     checkOut: '',
     notes: ''
@@ -34,11 +37,26 @@ export default function ReservationModal({ isOpen, onClose, selectedSuite }: Pro
 
   useEffect(() => {
     if (selectedSuite && selectedSuite.id) {
-      setFormData(prev => ({ ...prev, roomId: String(selectedSuite.id) }));
+      const suiteId = String(selectedSuite.id);
+      const suite = availableSuites.find(s => s.id === suiteId) || availableSuites[0];
+      setFormData(prev => ({ 
+        ...prev, 
+        roomId: suiteId,
+        guestsCount: suite.minCapacity
+      }));
     }
   }, [selectedSuite, isOpen]);
 
-  // Obtener suite seleccionada para referencia
+  // Adjust guests count if selected room changes
+  const handleRoomChange = (roomId: string) => {
+    const suite = availableSuites.find(s => s.id === roomId) || availableSuites[0];
+    setFormData(prev => ({ 
+      ...prev, 
+      roomId, 
+      guestsCount: suite.minCapacity 
+    }));
+  };
+
   const selectedSuiteObj = availableSuites.find(s => s.id === formData.roomId) || availableSuites[0];
   let nights = 1;
   if (formData.checkIn && formData.checkOut) {
@@ -49,6 +67,12 @@ export default function ReservationModal({ isOpen, onClose, selectedSuite }: Pro
     }
   }
   const estimatedPrice = nights * selectedSuiteObj.price;
+
+  // Generate valid guest range options
+  const guestOptions = [];
+  for (let i = selectedSuiteObj.minCapacity; i <= selectedSuiteObj.maxCapacity; i++) {
+    guestOptions.push(i);
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,6 +87,9 @@ export default function ReservationModal({ isOpen, onClose, selectedSuite }: Pro
           room_id: formData.roomId,
           guest_name: formData.name,
           guest_email: formData.email,
+          guest_phone: formData.phone,
+          guest_origin: formData.origin,
+          guests_count: formData.guestsCount,
           check_in: formData.checkIn,
           check_out: formData.checkOut,
           total_price: Number(estimatedPrice),
@@ -76,9 +103,9 @@ export default function ReservationModal({ isOpen, onClose, selectedSuite }: Pro
         setSyncStatusMsg(data.message || 'Tu solicitud ha sido recibida con éxito.');
         setSubmitted(true);
         
-        // Redirigir a WhatsApp con el mensaje predeterminado
+        // Redirigir a WhatsApp con el mensaje predeterminado y nuevos datos
         const text = encodeURIComponent(
-          `¡Hola Vainilla & Descanso! 🌿\n\nQuiero confirmar mi solicitud de reservación:\n👤 Huésped: ${formData.name}\n📧 Correo: ${formData.email}\n🏨 Suite: ${selectedSuiteObj.name}\n📅 Fechas: ${formData.checkIn} al ${formData.checkOut}\n📝 Notas: ${formData.notes || 'Ninguna'}\n\nQuedo a la espera de la confirmación de la tarifa dinámica para realizar el pago. ¡Gracias!`
+          `¡Hola Vainilla & Descanso! 🌿\n\nQuiero confirmar mi solicitud de reservación:\n👤 Huésped: ${formData.name}\n📞 Teléfono: ${formData.phone}\n📧 Correo: ${formData.email}\n📍 Procedencia: ${formData.origin || 'No especificada'}\n🏨 Suite: ${selectedSuiteObj.name}\n👥 Huéspedes: ${formData.guestsCount} pers.\n📅 Fechas: ${formData.checkIn} al ${formData.checkOut}\n📝 Notas: ${formData.notes || 'Ninguna'}\n\nQuedo a la espera de la confirmación de la tarifa dinámica para realizar el pago. ¡Gracias!`
         );
         const whatsappUrl = `https://wa.me/527821862711?text=${text}`;
         if (typeof window !== 'undefined') {
@@ -88,7 +115,17 @@ export default function ReservationModal({ isOpen, onClose, selectedSuite }: Pro
         setTimeout(() => {
           onClose();
           setSubmitted(false);
-          setFormData({ roomId: selectedSuiteObj?.id || '101', name: '', email: '', checkIn: '', checkOut: '', notes: '' });
+          setFormData({ 
+            roomId: selectedSuiteObj?.id || '101', 
+            name: '', 
+            email: '', 
+            phone: '', 
+            origin: '', 
+            guestsCount: selectedSuiteObj?.minCapacity || 3, 
+            checkIn: '', 
+            checkOut: '', 
+            notes: '' 
+          });
         }, 5000);
       } else {
         throw new Error(data.error || 'No se pudo procesar la reservación');
@@ -117,7 +154,7 @@ export default function ReservationModal({ isOpen, onClose, selectedSuite }: Pro
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="relative w-full max-w-xl bg-white rounded-[40px] overflow-hidden shadow-2xl border border-clay/30 max-h-[90vh] flex flex-col"
+            className="relative w-full max-w-2xl bg-white rounded-[40px] overflow-hidden shadow-2xl border border-clay/30 max-h-[90vh] flex flex-col"
           >
             {submitted ? (
               <div className="p-12 md:p-16 text-center flex flex-col items-center overflow-y-auto">
@@ -158,35 +195,35 @@ export default function ReservationModal({ isOpen, onClose, selectedSuite }: Pro
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  
+                  {/* Nombre Completo */}
                   <div className="space-y-2">
-                    <label className="text-[10px] font-bold text-charcoal/40 uppercase tracking-widest ml-1">Seleccionar Suite</label>
+                    <label className="text-[10px] font-bold text-charcoal/40 uppercase tracking-widest ml-1">Nombre Completo</label>
                     <div className="relative">
-                      <BedDouble className="absolute left-4 top-1/2 -translate-y-1/2 text-primary/40" size={18} />
-                      <select
-                        value={formData.roomId}
-                        onChange={(e) => setFormData({...formData, roomId: e.target.value})}
-                        className="w-full bg-bone border border-clay/50 rounded-2xl py-4 pl-12 pr-4 text-charcoal focus:outline-none focus:border-primary transition-colors text-sm font-medium appearance-none"
-                      >
-                        {availableSuites.map((s) => (
-                          <option key={s.id} value={s.id}>
-                            Suite {s.id}: {s.name.split('(')[0].trim()}
-                          </option>
-                        ))}
-                      </select>
+                      <User className="absolute left-4 top-1/2 -translate-y-1/2 text-primary/40" size={18} />
+                      <input 
+                        required
+                        value={formData.name}
+                        onChange={(e) => setFormData({...formData, name: e.target.value})}
+                        type="text" 
+                        placeholder="Ej. Juan Pérez" 
+                        className="w-full bg-bone border border-clay/50 rounded-2xl py-4 pl-12 pr-4 text-charcoal placeholder:text-charcoal/20 focus:outline-none focus:border-primary transition-colors text-sm"
+                      />
                     </div>
                   </div>
 
+                  {/* Teléfono y Correo */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <label className="text-[10px] font-bold text-charcoal/40 uppercase tracking-widest ml-1">Nombre Completo</label>
+                      <label className="text-[10px] font-bold text-charcoal/40 uppercase tracking-widest ml-1">Teléfono</label>
                       <div className="relative">
-                        <User className="absolute left-4 top-1/2 -translate-y-1/2 text-primary/40" size={18} />
+                        <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-primary/40" size={18} />
                         <input 
                           required
-                          value={formData.name}
-                          onChange={(e) => setFormData({...formData, name: e.target.value})}
-                          type="text" 
-                          placeholder="Ej. Juan Pérez" 
+                          value={formData.phone}
+                          onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                          type="tel" 
+                          placeholder="Ej. 782 186 2711" 
                           className="w-full bg-bone border border-clay/50 rounded-2xl py-4 pl-12 pr-4 text-charcoal placeholder:text-charcoal/20 focus:outline-none focus:border-primary transition-colors text-sm"
                         />
                       </div>
@@ -207,9 +244,64 @@ export default function ReservationModal({ isOpen, onClose, selectedSuite }: Pro
                     </div>
                   </div>
 
+                  {/* Procedencia */}
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-charcoal/40 uppercase tracking-widest ml-1">Procedencia</label>
+                    <div className="relative">
+                      <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-primary/40" size={18} />
+                      <input 
+                        value={formData.origin}
+                        onChange={(e) => setFormData({...formData, origin: e.target.value})}
+                        type="text" 
+                        placeholder="Ej. CDMX, Poza Rica, Monterrey" 
+                        className="w-full bg-bone border border-clay/50 rounded-2xl py-4 pl-12 pr-4 text-charcoal placeholder:text-charcoal/20 focus:outline-none focus:border-primary transition-colors text-sm"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Suite y Configuración de Huéspedes */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-bold text-charcoal/40 uppercase tracking-widest ml-1">Seleccionar Suite</label>
+                      <div className="relative">
+                        <BedDouble className="absolute left-4 top-1/2 -translate-y-1/2 text-primary/40" size={18} />
+                        <select
+                          value={formData.roomId}
+                          onChange={(e) => handleRoomChange(e.target.value)}
+                          className="w-full bg-bone border border-clay/50 rounded-2xl py-4 pl-12 pr-4 text-charcoal focus:outline-none focus:border-primary transition-colors text-sm font-medium appearance-none"
+                        >
+                          {availableSuites.map((s) => (
+                            <option key={s.id} value={s.id}>
+                              Suite {s.id}: {s.name.split('(')[0].trim()}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-bold text-charcoal/40 uppercase tracking-widest ml-1">Huéspedes (Límite Ajustado)</label>
+                      <div className="relative">
+                        <User className="absolute left-4 top-1/2 -translate-y-1/2 text-primary/40" size={18} />
+                        <select
+                          value={formData.guestsCount}
+                          onChange={(e) => setFormData({...formData, guestsCount: Number(e.target.value)})}
+                          className="w-full bg-bone border border-clay/50 rounded-2xl py-4 pl-12 pr-4 text-charcoal focus:outline-none focus:border-primary transition-colors text-sm font-medium appearance-none"
+                        >
+                          {guestOptions.map((opt) => (
+                            <option key={opt} value={opt}>
+                              {opt} {opt === 1 ? 'persona' : 'personas'}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Fechas de Ingreso y Salida */}
                   <div className="grid grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <label className="text-[10px] font-bold text-charcoal/40 uppercase tracking-widest ml-1">Llegada</label>
+                      <label className="text-[10px] font-bold text-charcoal/40 uppercase tracking-widest ml-1">Ingreso</label>
                       <div className="relative">
                         <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-primary/40" size={18} />
                         <input 
@@ -236,20 +328,22 @@ export default function ReservationModal({ isOpen, onClose, selectedSuite }: Pro
                     </div>
                   </div>
 
+                  {/* Observaciones Especiales */}
                   <div className="space-y-2">
-                    <label className="text-[10px] font-bold text-charcoal/40 uppercase tracking-widest ml-1">Notas Especiales</label>
+                    <label className="text-[10px] font-bold text-charcoal/40 uppercase tracking-widest ml-1">Observaciones Especiales</label>
                     <div className="relative">
                       <MessageSquare className="absolute left-4 top-5 text-primary/40" size={18} />
                       <textarea 
                         value={formData.notes}
                         onChange={(e) => setFormData({...formData, notes: e.target.value})}
-                        placeholder="Dinos si celebras algo especial o tienes alguna necesidad..." 
+                        placeholder="Requerimientos especiales, alergias, preferencias de almohadas..." 
                         rows={3}
                         className="w-full bg-bone border border-clay/50 rounded-2xl py-4 pl-12 pr-4 text-charcoal placeholder:text-charcoal/20 focus:outline-none focus:border-primary transition-colors resize-none text-sm"
                       />
                     </div>
                   </div>
 
+                  {/* Info Tarifa Dinámica */}
                   <div className="p-4 bg-clay/10 rounded-2xl border border-clay/30 flex justify-between items-center text-charcoal">
                     <div className="flex flex-col">
                       <span className="text-[10px] font-bold uppercase tracking-widest text-primary">Tarifa Dinámica Garantizada</span>
@@ -257,6 +351,7 @@ export default function ReservationModal({ isOpen, onClose, selectedSuite }: Pro
                     </div>
                   </div>
 
+                  {/* Botón enviar */}
                   <button 
                     disabled={loading}
                     type="submit"
@@ -266,7 +361,7 @@ export default function ReservationModal({ isOpen, onClose, selectedSuite }: Pro
                     <span>{loading ? 'Transmitiendo Solicitud...' : 'Confirmar Solicitud y Pagar en WhatsApp'}</span>
                   </button>
                   <p className="text-[9px] text-charcoal/40 text-center uppercase tracking-widest">
-                    Conexión encriptada directa con concierge de Vainilla & Descanso.
+                    Conexión encriptada directa con el concierge del Hotel Vainilla & Descanso.
                   </p>
                 </form>
               </div>
