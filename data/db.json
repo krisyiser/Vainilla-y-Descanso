@@ -233,6 +233,20 @@
       "status": "pending_sync",
       "sync_status": "queued_in_github",
       "created_at": "2026-05-19T03:43:40.514Z"
+    },
+    {
+      "id": "elk1abp7x",
+      "reservation_id": "res_queue_1779162466416",
+      "room_id": "102",
+      "guest_name": "juan perez",
+      "guest_email": "",
+      "check_in": "undefined",
+      "check_out": "undefined",
+      "total_price": 0,
+      "notes": "solicita doble desayuno",
+      "status": "pending_sync",
+      "sync_status": "queued_in_github",
+      "created_at": "2026-05-19T03:47:46.416Z"
     }
   ],
   "guests": [
