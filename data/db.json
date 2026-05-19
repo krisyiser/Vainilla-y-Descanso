@@ -1423,6 +1423,20 @@
       "status": "pending_sync",
       "sync_status": "queued_in_github",
       "created_at": "2026-05-19T03:52:52.874Z"
+    },
+    {
+      "id": "4dwx41d5h",
+      "reservation_id": "res_queue_1779162773710",
+      "room_id": "202",
+      "guest_name": "juan",
+      "guest_email": "",
+      "check_in": "undefined",
+      "check_out": "undefined",
+      "total_price": 1400,
+      "notes": "Reserva desde sitio web en lÃÂ­nea",
+      "status": "pending_sync",
+      "sync_status": "queued_in_github",
+      "created_at": "2026-05-19T03:52:53.710Z"
     }
   ],
   "guests": [
