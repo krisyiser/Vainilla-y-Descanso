@@ -176,6 +176,23 @@
       "status": "confirmed_online",
       "sync_status": "synced_to_desktop",
       "created_at": "2026-05-22T00:37:57.581Z"
+    },
+    {
+      "id": "2aadu15c4",
+      "reservation_id": "res_queue_1779416119886",
+      "room_id": "101",
+      "guest_name": "Kristian Yiser Kuri Vargas",
+      "guest_email": "hellokristian7u7@gmail.com",
+      "guest_phone": "7848489790",
+      "guest_origin": "",
+      "guests_count": 3,
+      "check_in": "2026-05-22",
+      "check_out": "2026-05-24",
+      "total_price": 5100,
+      "notes": "[Huéspedes: 3 | Tel: 7848489790 | Procedencia: ]",
+      "status": "pending_sync",
+      "sync_status": "queued_in_github",
+      "created_at": "2026-05-22T02:15:19.886Z"
     }
   ],
   "guests": [
