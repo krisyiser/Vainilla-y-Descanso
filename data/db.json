@@ -207,8 +207,8 @@
       "check_out": "2026-06-11",
       "total_price": 1200,
       "notes": "[Huéspedes: 2 | Tel: 7848489790 | Procedencia: Papantla]",
-      "status": "pending_sync",
-      "sync_status": "queued_in_github",
+      "status": "confirmed_online",
+      "sync_status": "synced_to_desktop",
       "created_at": "2026-06-02T08:14:21.820Z"
     }
   ],
