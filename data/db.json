@@ -241,8 +241,8 @@
       "check_out": "2026-06-03",
       "total_price": 1900,
       "notes": "[Huéspedes: 3 | Tel: 7848489790 | Procedencia: ]",
-      "status": "pending_sync",
-      "sync_status": "queued_in_github",
+      "status": "confirmed_online",
+      "sync_status": "synced_to_desktop",
       "created_at": "2026-06-02T19:35:24.670Z"
     }
   ],
