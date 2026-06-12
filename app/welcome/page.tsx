@@ -17,8 +17,8 @@ export default function WelcomeGuestPage() {
   // Datos del Wi-Fi
   const wifiNetwork = "INFINITUM1F4F";
   const wifiPass = "SA3stf2SGt";
-  const hotelPhone = "+527841123456"; // Teléfono ficticio editable
-  const hotelWhatsapp = "527841123456"; 
+  const hotelPhone = "+527821862711"; // Teléfono real de asistencia
+  const hotelWhatsapp = "527821862711"; 
 
   const copyToClipboard = (text: string, setCopied: (v: boolean) => void) => {
     navigator.clipboard.writeText(text);
