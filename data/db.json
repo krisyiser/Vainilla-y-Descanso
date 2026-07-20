@@ -329,6 +329,23 @@
       "status": "pending_sync",
       "sync_status": "queued_in_github",
       "created_at": "2026-07-20T05:48:54.139Z"
+    },
+    {
+      "id": "rcl75wtne",
+      "reservation_id": "res_queue_1784527976517",
+      "room_id": "202",
+      "guest_name": "alexa",
+      "guest_email": "hellokristian7u7@gmail.com",
+      "guest_phone": "784101996",
+      "guest_origin": "",
+      "guests_count": 1,
+      "check_in": "2026-07-20",
+      "check_out": "2026-07-21",
+      "total_price": 900,
+      "notes": "[Huéspedes: 1 | Tel: 784101996 | Procedencia: ]",
+      "status": "pending_sync",
+      "sync_status": "queued_in_github",
+      "created_at": "2026-07-20T06:12:56.517Z"
     }
   ],
   "guests": [
