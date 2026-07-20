@@ -27,7 +27,7 @@ export default function SuiteDetailModal({ suite, isOpen, onClose, onBook }: Pro
 
   const distribution = suite.id === '101' 
     ? 'Dos recámaras' 
-    : suite.id === '202' || suite.id === '203' 
+    : suite.id === '103' || suite.id === '104' 
       ? 'Cama Queen' 
       : 'Cama King + Sofá cama';
 

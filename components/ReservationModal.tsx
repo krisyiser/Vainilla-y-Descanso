@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Calendar, User, Mail, MessageSquare, Send, CheckCircle2, Loader2, BedDouble, Cloud, MessageCircle, Phone, MapPin } from 'lucide-react';
 import Image from 'next/image';
 
+import { getCanonicalRoomId } from '@/lib/roomUtils';
+
 interface Props {
   isOpen: boolean;
   onClose: () => void;
@@ -12,11 +14,11 @@ interface Props {
 }
 
 const availableSuites = [
-  { id: '101', name: 'Moros y Cristianos (PB)', price: 1900, minCapacity: 3, maxCapacity: 6 },
-  { id: '102', name: 'El Volador (PB)', price: 1200, minCapacity: 2, maxCapacity: 4 },
-  { id: '201', name: 'Santiagueros (PA)', price: 1200, minCapacity: 2, maxCapacity: 4 },
-  { id: '202', name: 'Guaguas (PA)', price: 900, minCapacity: 1, maxCapacity: 2 },
-  { id: '203', name: 'Negritos (PA)', price: 900, minCapacity: 1, maxCapacity: 2 },
+  { id: '101', name: 'Moros y cristianos (Suite)', price: 1900, minCapacity: 3, maxCapacity: 6 },
+  { id: '102', name: 'El Volador (Suite)', price: 1200, minCapacity: 2, maxCapacity: 4 },
+  { id: '103', name: 'Guagua (Estándar)', price: 900, minCapacity: 1, maxCapacity: 2 },
+  { id: '104', name: 'Negritos (Estándar)', price: 900, minCapacity: 1, maxCapacity: 2 },
+  { id: '105', name: 'Santiagueros (Suite)', price: 1200, minCapacity: 2, maxCapacity: 4 },
 ];
 
 export default function ReservationModal({ isOpen, onClose, selectedSuite }: Props) {
@@ -37,7 +39,7 @@ export default function ReservationModal({ isOpen, onClose, selectedSuite }: Pro
 
   useEffect(() => {
     if (selectedSuite && selectedSuite.id) {
-      const suiteId = String(selectedSuite.id);
+      const suiteId = getCanonicalRoomId(selectedSuite.id);
       const suite = availableSuites.find(s => s.id === suiteId) || availableSuites[0];
       setFormData(prev => ({ 
         ...prev, 
@@ -49,10 +51,11 @@ export default function ReservationModal({ isOpen, onClose, selectedSuite }: Pro
 
   // Adjust guests count if selected room changes
   const handleRoomChange = (roomId: string) => {
-    const suite = availableSuites.find(s => s.id === roomId) || availableSuites[0];
+    const canonicalId = getCanonicalRoomId(roomId);
+    const suite = availableSuites.find(s => s.id === canonicalId) || availableSuites[0];
     setFormData(prev => ({ 
       ...prev, 
-      roomId, 
+      roomId: canonicalId, 
       guestsCount: suite.minCapacity 
     }));
   };
@@ -74,12 +77,13 @@ export default function ReservationModal({ isOpen, onClose, selectedSuite }: Pro
     const prices: Record<string, { weekday: number, weekend: number, high: number }> = {
       '101': { weekday: 1900, weekend: 2300, high: 2800 },
       '102': { weekday: 1200, weekend: 1600, high: 1950 },
-      '201': { weekday: 1200, weekend: 1600, high: 1950 },
-      '202': { weekday: 900, weekend: 1100, high: 1400 },
-      '203': { weekday: 900, weekend: 1100, high: 1400 },
+      '103': { weekday: 900, weekend: 1100, high: 1400 },
+      '104': { weekday: 900, weekend: 1100, high: 1400 },
+      '105': { weekday: 1200, weekend: 1600, high: 1950 },
     };
 
-    const suitePrices = prices[roomId] || prices['101'];
+    const canonicalId = getCanonicalRoomId(roomId);
+    const suitePrices = prices[canonicalId] || prices['101'];
     
     let totalPrice = 0;
     let current = new Date(start);

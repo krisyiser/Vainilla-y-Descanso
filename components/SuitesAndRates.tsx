@@ -9,7 +9,7 @@ const suites = [
   {
     id: '101',
     name: 'Moros y Cristianos',
-    type: 'Planta Baja (PB)',
+    type: 'Suite • Planta Baja (PB)',
     capacity: '3 a 6 personas',
     image: '/Moros y cristianos.png',
     features: ['Dos recámaras', 'Baño completo', 'Cocineta equipada', 'WiFi', 'Aire acondicionado', 'Frigobar & Cafetera']
@@ -17,34 +17,34 @@ const suites = [
   {
     id: '102',
     name: 'El Volador',
-    type: 'Planta Baja (PB)',
+    type: 'Suite • Planta Baja (PB)',
     capacity: '2 a 4 personas',
     image: '/El volador.png',
     features: ['Cama King size', 'Sofá cama', 'Baño completo', 'WiFi', 'Aire acondicionado', 'Frigobar & Cafetera']
   },
   {
-    id: '201',
-    name: 'Santiagueros',
-    type: 'Planta Alta (PA)',
-    capacity: '2 a 4 personas',
-    image: '/Santiagueros.png',
-    features: ['Cama king size', 'Sofá cama', 'Baño completo', 'WiFi', 'Aire acondicionado', 'Frigobar & Cafetera']
-  },
-  {
-    id: '202',
-    name: 'Guaguas',
-    type: 'Planta Alta (PA)',
+    id: '103',
+    name: 'Guagua',
+    type: 'Estándar • Planta Alta (PA)',
     capacity: '1 a 2 personas',
     image: '/Guaguas.png',
     features: ['Cama Queen size', 'Baño completo', 'Cocineta equipada', 'WiFi', 'Aire acondicionado', 'Frigobar & Cafetera']
   },
   {
-    id: '203',
+    id: '104',
     name: 'Negritos',
-    type: 'Planta Alta (PA)',
+    type: 'Estándar • Planta Alta (PA)',
     capacity: '1 a 2 personas',
     image: '/Negritos.png',
     features: ['Cama Queen size', 'Baño completo', 'WiFi', 'Aire acondicionado', 'Frigobar & Cafetera']
+  },
+  {
+    id: '105',
+    name: 'Santiagueros',
+    type: 'Suite • Planta Alta (PA)',
+    capacity: '2 a 4 personas',
+    image: '/Santiagueros.png',
+    features: ['Cama king size', 'Sofá cama', 'Baño completo', 'WiFi', 'Aire acondicionado', 'Frigobar & Cafetera']
   }
 ];
 
@@ -64,9 +64,9 @@ const getTodayPriceInfo = (suiteId: string) => {
   const prices: Record<string, { weekday: number, weekend: number, high: number, breakfasts?: number }> = {
     '101': { weekday: 1900, weekend: 2300, high: 2800, breakfasts: 3 },
     '102': { weekday: 1200, weekend: 1600, high: 1950, breakfasts: 2 },
-    '201': { weekday: 1200, weekend: 1600, high: 1950, breakfasts: 2 },
-    '202': { weekday: 900, weekend: 1100, high: 1400, breakfasts: 1 },
-    '203': { weekday: 900, weekend: 1100, high: 1400, breakfasts: 1 },
+    '103': { weekday: 900, weekend: 1100, high: 1400, breakfasts: 1 },
+    '104': { weekday: 900, weekend: 1100, high: 1400, breakfasts: 1 },
+    '105': { weekday: 1200, weekend: 1600, high: 1950, breakfasts: 2 },
   };
 
   const info = prices[suiteId];
