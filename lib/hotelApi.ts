@@ -30,7 +30,7 @@ export async function sendReservationToCRM(reservationData: {
   notes?: string;
   payment_status?: string;
 }) {
-  const crmUrl = process.env.CRM_API_URL || 'http://localhost:3000/api/website/reservations';
+  const crmUrl = process.env.CRM_API_URL || 'https://vainillaydescansocrm.netlify.app/api/website/reservations';
   const apiKey = process.env.CRM_API_KEY || 'vd_crm_secret_key_2026';
   const canonicalRoomId = getCanonicalRoomId(reservationData.room_id);
   try {
