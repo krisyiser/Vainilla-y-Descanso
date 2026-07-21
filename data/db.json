@@ -380,6 +380,23 @@
       "status": "confirmed_online",
       "sync_status": "queued_in_github",
       "created_at": "2026-07-21T00:15:13.688Z"
+    },
+    {
+      "id": "res_1784600043239_ahe09",
+      "reservation_id": "res_1784600043239_ahe09",
+      "room_id": "101",
+      "guest_name": "yersi",
+      "guest_email": "hellokristian7u7@gmail.com",
+      "guest_phone": "7841011996",
+      "guest_origin": "",
+      "guests_count": 1,
+      "check_in": "2026-07-20",
+      "check_out": "2026-07-20",
+      "total_price": 2000,
+      "notes": "[Huéspedes: 1 | Tel: 7841011996 | Procedencia: ] [Estacionamiento: Sí]",
+      "status": "confirmed_online",
+      "sync_status": "synced_to_crm",
+      "created_at": "2026-07-21T02:14:05.335Z"
     }
   ],
   "guests": [
