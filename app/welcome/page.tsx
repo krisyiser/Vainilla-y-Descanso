@@ -535,7 +535,7 @@ export default function WelcomeGuestPage() {
                   <div>
                     <h4 className="font-heading font-bold text-sm text-[#A68A64] mb-1">5. COSTO Y DISPOSICIONES</h4>
                     <ul className="list-disc pl-5 space-y-1 text-gray-600">
-                      <li>El uso del estacionamiento tiene un costo de <strong>$100.00 MXN</strong> (cien pesos mexicanos) por estancia/noche.</li>
+                      <li>El uso del estacionamiento tiene un costo de <strong>$50.00 MXN</strong> (cincuenta pesos mexicanos) por estancia/noche.</li>
                       <li>El hotel se reserva el derecho de retirar del estacionamiento cualquier vehículo que incumpla este reglamento, previo aviso al huésped.</li>
                     </ul>
                   </div>

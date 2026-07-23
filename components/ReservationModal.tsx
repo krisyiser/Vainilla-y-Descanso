@@ -131,7 +131,7 @@ export default function ReservationModal({ isOpen, onClose, selectedSuite }: Pro
     }
   }
 
-  const parkingCost = formData.hasParking ? (100 * Math.max(1, nights)) : 0;
+  const parkingCost = formData.hasParking ? (50 * Math.max(1, nights)) : 0;
   const grandTotalPrice = estimatedPrice + parkingCost;
 
   // Generate valid guest range options starting at 1 for all suites
@@ -145,7 +145,7 @@ export default function ReservationModal({ isOpen, onClose, selectedSuite }: Pro
       ? `${formData.checkIn} (Mismo día / Pasadía)`
       : `${formData.checkIn} al ${formData.checkOut} (${nights} noche${nights > 1 ? 's' : ''})`;
 
-    const parkingText = formData.hasParking ? 'Sí (+$100 MXN/día)' : 'No';
+    const parkingText = formData.hasParking ? 'Sí (+$50 MXN/día)' : 'No';
 
     const text = encodeURIComponent(
       `¡Hola Vainilla & Descanso! 🌿\n\nQuiero confirmar mi solicitud de reservación:\n👤 Huésped: ${formData.name}\n📞 Teléfono: ${formData.phone}\n📧 Correo: ${formData.email}\n📍 Procedencia: ${formData.origin || 'No especificada'}\n🏨 Suite: ${selectedSuiteObj.name}\n👥 Huéspedes: ${formData.guestsCount} pers.\n🚗 Estacionamiento: ${parkingText}\n📅 Fechas: ${datesStr}\n💰 Subtotal Estimado: $${grandTotalPrice.toLocaleString('es-MX')} MXN\n📝 Notas: ${formData.notes || 'Ninguna'}\n\nQuedo a la espera de la confirmación de la tarifa para realizar mi pago. ¡Muchas gracias!`
@@ -427,7 +427,7 @@ export default function ReservationModal({ isOpen, onClose, selectedSuite }: Pro
                       </div>
                       <div className="flex flex-col text-left">
                         <span className="text-xs font-bold text-charcoal">¿Requieres Estacionamiento?</span>
-                        <span className="text-[10px] text-charcoal/50">Servicio privado en las instalaciones (+$100 MXN / día)</span>
+                        <span className="text-[10px] text-charcoal/50">Servicio privado en las instalaciones (+$50 MXN / día)</span>
                       </div>
                     </div>
                     <input 
