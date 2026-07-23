@@ -148,7 +148,7 @@ export default function ReservationModal({ isOpen, onClose, selectedSuite }: Pro
     const parkingText = formData.hasParking ? 'Sí (+$50 MXN/día)' : 'No';
 
     const text = encodeURIComponent(
-      `¡Hola Vainilla & Descanso! 🌿\n\nQuiero confirmar mi solicitud de reservación:\n👤 Huésped: ${formData.name}\n📞 Teléfono: ${formData.phone}\n📧 Correo: ${formData.email}\n📍 Procedencia: ${formData.origin || 'No especificada'}\n🏨 Suite: ${selectedSuiteObj.name}\n👥 Huéspedes: ${formData.guestsCount} pers.\n🚗 Estacionamiento: ${parkingText}\n📅 Fechas: ${datesStr}\n💰 Subtotal Estimado: $${grandTotalPrice.toLocaleString('es-MX')} MXN\n📝 Notas: ${formData.notes || 'Ninguna'}\n\nQuedo a la espera de la confirmación de la tarifa para realizar mi pago. ¡Muchas gracias!`
+      `¡Hola Vainilla & Descanso! 🌿\n\nQuiero confirmar mi solicitud de reservación:\n👤 Huésped: ${formData.name}\n📞 Teléfono: ${formData.phone}\n📧 Correo: ${formData.email}\n📍 Procedencia: ${formData.origin || 'No especificada'}\n🏨 Suite: ${selectedSuiteObj.name}\n👥 Huéspedes: ${formData.guestsCount} pers.\n🚗 Estacionamiento: ${parkingText}\n📅 Fechas: ${datesStr}\n📝 Notas: ${formData.notes || 'Ninguna'}\n\nQuedo a la espera de la confirmación de la tarifa para realizar mi pago. ¡Muchas gracias!`
     );
     return `https://wa.me/527821862711?text=${text}`;
   };
@@ -453,20 +453,20 @@ export default function ReservationModal({ isOpen, onClose, selectedSuite }: Pro
                     </div>
                   </div>
 
-                  {/* Info Tarifa Dinámica - SUBTOTAL HOSPEDAJE */}
+                  {/* Info Reserva - Fechas */}
                   <div className="p-5 bg-clay/10 rounded-[24px] border border-clay/30 flex justify-between items-center text-charcoal">
                     <div className="flex flex-col text-left">
                       <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#A68A64]">
-                        {isSameDay ? 'Pasadía / Reserva Mismo Día' : 'Tarifa Dinámica Aplicada'}
+                        Detalle de Estancia
                       </span>
                       <span className="text-xs text-charcoal/70 font-light mt-1">
                         {isSameDay ? 'Entrada y salida el mismo día (1 jornada)' : `${nights} noche${nights > 1 ? 's' : ''}${formData.hasParking ? ' + Estacionamiento' : ''}`}
                       </span>
                     </div>
                     <div className="flex flex-col text-right">
-                      <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-charcoal/40">Subtotal Estimado</span>
-                      <span className="text-2xl font-bold text-charcoal mt-1">
-                        {grandTotalPrice > 0 ? `$${grandTotalPrice.toLocaleString('es-MX')}` : '$0'}
+                      <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-charcoal/40">Tarifa</span>
+                      <span className="text-sm font-bold text-charcoal mt-1">
+                        A confirmar por WhatsApp
                       </span>
                     </div>
                   </div>
